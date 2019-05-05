@@ -1,0 +1,6 @@
+rootProject.name = 'MultiModules'
+include 'Swagger-Common'
+include 'RestaurantService'
+include 'RestaurantService-api'
+include 'OrderService'
+
