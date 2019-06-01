@@ -1,4 +1,7 @@
 language: java
+#permessi necessari per gradle build (exec-permission), impostati runtime
+before_install:
+ - chmod +x gradlew
 install: true
 
 jdk:
