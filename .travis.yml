@@ -1,11 +1,12 @@
 language: java
-#permessi necessari per gradle build (exec-permission), impostati runtime
-before_install:
- - chmod +x gradlew
 install: true
 
 jdk:
   - oraclejdk8
-
+  
+#permessi necessari per gradle build (exec-permission), impostati runtime
+before_script:
+ - chmod +x gradlew
+ 
 script:
   - ./gradlew build --scan -s
