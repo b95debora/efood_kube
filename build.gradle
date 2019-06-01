@@ -14,11 +14,11 @@ buildscript {
     }
 }
 
-#enable build scans
+//enable build scans
 plugins {
     id 'com.gradle.build-scan' version '2.3'
 }
-#accept the build scan license agreement
+//accept the build scan license agreement
 buildScan {    
     termsOfServiceUrl = 'https://gradle.com/terms-of-service'
     termsOfServiceAgree = 'yes'
