@@ -14,6 +14,16 @@ buildscript {
     }
 }
 
+#enable build scans
+plugins {
+    id 'com.gradle.build-scan' version '2.3'
+}
+#accept the build scan license agreement
+buildScan {    
+    termsOfServiceUrl = 'https://gradle.com/terms-of-service'
+    termsOfServiceAgree = 'yes'
+}
+
 subprojects {
     apply plugin: 'java'
     apply plugin: 'org.springframework.boot'
