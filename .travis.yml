@@ -8,7 +8,9 @@ jdk:
 before_script:
  - wget https://services.gradle.org/distributions/gradle-5.2.1-bin.zip
  - mkdir -d /opt/gradle gradle-5.2.1-bin.zip
- - ls /opt/gradle/gradle-5.4.1
+ - ls /opt/gradle/gradle-5.2.1
+ - export PATH=$PATH:/opt/gradle/gradle-5.2.1/bin
+ - gradle -v
  
 script:
   - gradle build --scan -s
