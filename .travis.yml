@@ -6,8 +6,7 @@ jdk:
   
 #permessi necessari per gradle build (exec-permission), impostati runtime
 before_script:
- - sudo apt-get update
- - sudo apt upgrade gradle
+ - gradle wrapper --gradle-version 5.0
  - gradle -v
  
 script:
