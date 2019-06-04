@@ -7,6 +7,7 @@ jdk:
 #permessi necessari per gradle build (exec-permission), impostati runtime
 before_script:
  - chmod +x gradlew
+ - ./gradlew wrapper --gradle-version=5.0 --distribution-type=bin
  - ./gradle wrapper --gradle-version 5.0
  
 script:
