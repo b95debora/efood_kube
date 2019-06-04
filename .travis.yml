@@ -10,5 +10,5 @@ before_script:
  - ./gradlew wrapper --gradle-version=5.2.1 --distribution-type=bin
  
 script:
-  - ./gradlew build --scan -s
+  - gradle build --scan -s
   - gradle test
