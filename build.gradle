@@ -13,7 +13,7 @@ buildscript {
         classpath "io.franzbecker:gradle-lombok:2.0"
     }
 }
-
+/*
 //enable build scans
 plugins {
     id 'com.gradle.build-scan' version '2.3'
@@ -23,6 +23,7 @@ buildScan {
     termsOfServiceUrl = 'https://gradle.com/terms-of-service'
     termsOfServiceAgree = 'yes'
 }
+*/
 
 subprojects {
     apply plugin: 'java'
