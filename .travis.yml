@@ -18,3 +18,6 @@ before_install:
 script:
   - gradle build --scan -s
   - gradle test
+
+after_failure:
+  - cat ///home/travis/build/b95debora/efood_kube/RestaurantService/build/reports/tests/test/index.html
