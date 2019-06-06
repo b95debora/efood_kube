@@ -5,7 +5,7 @@ jdk:
   - oraclejdk8
 
 before_install:
- - chmod +x /travis_scripts/install-gradle.sh
+ - chmod +x travis_scripts/install-gradle.sh
  - ./travis_scripts/install-gradle.sh
  - gradle -v
  
