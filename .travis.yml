@@ -4,6 +4,10 @@ install: true
 jdk:
   - oraclejdk8
 
+#git:
+  # for cloning
+  #depth: 2000
+
 before_install:
  - chmod +x travis_scripts/install-gradle.sh
  - ./travis_scripts/install-gradle.sh
