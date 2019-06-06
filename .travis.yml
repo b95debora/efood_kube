@@ -3,9 +3,9 @@ install: true
 
 jdk:
   - oraclejdk8
-  
-#permessi necessari per gradle build (exec-permission), impostati runtime
+
 before_install:
+ #install gradle 5.0 (default 4.0)
  - wget https://services.gradle.org/distributions/gradle-5.0-bin.zip -P /tmp
  - sudo unzip -d /opt/gradle /tmp/gradle-*.zip
  - ls /opt/gradle/gradle-5.0

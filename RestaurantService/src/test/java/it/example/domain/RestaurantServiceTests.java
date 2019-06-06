@@ -102,7 +102,7 @@ public class RestaurantServiceTests {
     public void deleteByIdTest(){
         restaurantService.deleteById(RESTAURANT_ID);
         /*verifica che deleteById(restId) del repository sia stato invocato una volta*/
-        verify(restaurantRepository, times(1)).deleteById(3L);
+        verify(restaurantRepository, times(1)).deleteById(RESTAURANT_ID);
     }
 
     @Test
