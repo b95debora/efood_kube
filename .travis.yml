@@ -22,8 +22,13 @@ before_install:
   - export PATH=$GRADLE_HOME/bin:$PATH
   - gradle -v
 
+env:
+  - $TEST_MODULE: RestaurantService
+  - $TEST_MODULE: OrderService
+
 script:
   - gradle build --scan -s
+  - cd $TEST_MODULE
   - gradle test
 
 after_success:
