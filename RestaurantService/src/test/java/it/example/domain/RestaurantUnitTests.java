@@ -11,7 +11,7 @@ public class RestaurantUnitTests {
 
     @Before
     public void setup() {
-        restaurant = new Restaurant("r2", "a1");
+        restaurant = new Restaurant("r1", "a1");
     }
 
     @Test
