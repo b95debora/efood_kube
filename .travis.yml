@@ -4,6 +4,9 @@ install: true
 jdk:
   - oraclejdk8
 
+services:
+  - docker
+
 #git:
   # for cloning
   #depth: 2000
@@ -22,3 +25,8 @@ before_install:
 script:
   - gradle build --scan -s
   - gradle test
+
+after_success:
+  - ls
+  - docker build -t b95debora/restaurant:test /RestaurantService/
+  - docker images
