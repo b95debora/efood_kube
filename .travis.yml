@@ -28,5 +28,5 @@ script:
 
 after_success:
   - ls RestaurantService/
-  - docker build -t b95debora/restaurant:test -f RestaurantService/
+  - docker build -t b95debora/restaurant:test RestaurantService/
   - docker images
