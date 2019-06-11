@@ -32,10 +32,11 @@ jobs:
         - export GRADLE_HOME=/opt/gradle/gradle-5.0
         - export PATH=$GRADLE_HOME/bin:$PATH
         - gradle -v
-      script: gradle test
+      script: gradle test --scan -s
     - name: "integration tests"
       env:
         - DOCKER_COMPOSE_VERSION=1.23.2
+        #- DOCKER_HOST_IP =
       before_install:
         #GRADLE 5.0
         - wget https://services.gradle.org/distributions/gradle-5.0-bin.zip -P /tmp
@@ -48,10 +49,11 @@ jobs:
         - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
         - chmod +x docker-compose
         - sudo mv docker-compose /usr/local/bin
+        - ifconfig
       script:
         - sudo lsof -t -i:5432
         - sudo kill `sudo lsof -t -i:5432`
-        - gradle integrationTest
+        - gradle integrationTest --scan -s
     - stage: "build image"
       name: "build image"
       services:
