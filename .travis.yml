@@ -49,6 +49,8 @@ jobs:
         - chmod +x docker-compose
         - sudo mv docker-compose /usr/local/bin
       script:
+        - sudo lsof -t -i:5432
+        - sudo kill `sudo lsof -t -i:5432`
         - gradle integrationTest
     - stage: "build image"
       name: "build image"
