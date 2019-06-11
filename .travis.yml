@@ -3,35 +3,35 @@ install: true
 
 jdk:
   - oraclejdk8
-
-services:
-  - docker
-
 #git:
   # for cloning
   #depth: 2000
 
-before_install:
- #install Gradle 5.0
+jobs:
+  include:
+    - stage: "build"
+      before_install:
+        - wget https://services.gradle.org/distributions/gradle-5.0-bin.zip -P /tmp
+        - sudo unzip -d /opt/gradle /tmp/gradle-*.zip
+        - export GRADLE_HOME=/opt/gradle/gradle-5.0
+        - export PATH=$GRADLE_HOME/bin:$PATH
+        - gradle -v
+      script:
+        - gradle build --scan -s
+    - stage: "tests"
+      name: "unit tests"
+      before_install:
+        - wget https://services.gradle.org/distributions/gradle-5.0-bin.zip -P /tmp
+        - sudo unzip -d /opt/gradle /tmp/gradle-*.zip
+        - export GRADLE_HOME=/opt/gradle/gradle-5.0
+        - export PATH=$GRADLE_HOME/bin:$PATH
+        - gradle -v
+      script: gradle test
+    - name: "build image"
+      services:
+        - docker
+      script:
+        - docker build -t b95debora/restaurant:test RestaurantService/
+        - docker images
 
- #- chmod +x travis_scripts/install-gradle.sh
- #- ./travis_scripts/install-gradle.sh
-  - wget https://services.gradle.org/distributions/gradle-5.0-bin.zip -P /tmp
-  - sudo unzip -d /opt/gradle /tmp/gradle-*.zip
-  - export GRADLE_HOME=/opt/gradle/gradle-5.0
-  - export PATH=$GRADLE_HOME/bin:$PATH
-  - gradle -v
 
-env:
-  - $TEST_MODULE: RestaurantService
-  - $TEST_MODULE: OrderService
-
-script:
-  - gradle build --scan -s
-  - cd $TEST_MODULE
-  - gradle test
-
-after_success:
-  - ls RestaurantService/
-  - docker build -t b95debora/restaurant:test RestaurantService/
-  - docker images
