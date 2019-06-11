@@ -10,6 +10,32 @@ buildscript {
     }
 }
 
+//plugin TestSets di gradle
+plugins {
+    id 'org.unbroken-dome.test-sets' version '2.1.1'
+}
+
+//configura Gradle Docker Compose 
+apply plugin: 'docker-compose'
+
+testSets {
+    integrationTest { dirName = 'integration-test' }
+}
+
+//vengono specificati quali sono i container da tirare su durante il test
+dockerCompose {
+    //startedServices = []
+    //invece di indicare i nomi dei servizi da far partire nel docker-compose.yml, ne creo uno nuovo
+    useComposeFiles = ['../docker-compose-integration-test.yml']
+    //stopContainers = false
+    // i contenitori possono poi essere arrestati con gradle :order-service:composeDownForced
+}
+dockerCompose.isRequiredBy(integrationTest)
+
+integrationTest.doFirst {
+    dockerCompose.exposeAsEnvironment(test)
+}
+
 dependencies {
     //Other projects
     implementation project(":Swagger-Common")

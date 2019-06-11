@@ -10,6 +10,7 @@ jdk:
 jobs:
   include:
     - stage: "build"
+      name: "build"
       before_install:
         - wget https://services.gradle.org/distributions/gradle-5.0-bin.zip -P /tmp
         - sudo unzip -d /opt/gradle /tmp/gradle-*.zip
@@ -27,7 +28,18 @@ jobs:
         - export PATH=$GRADLE_HOME/bin:$PATH
         - gradle -v
       script: gradle test
-    - name: "build image"
+    - name: "integration tests"
+      env:
+        - DOCKER_COMPOSE_VERSION=1.23.2
+      before_install:
+        - sudo rm /usr/local/bin/docker-compose
+        - curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+        - chmod +x docker-compose
+        - sudo mv docker-compose /usr/local/bin
+      script:
+        - gradle integrationTest
+    - stage: "build image"
+      name: "build image"
       services:
         - docker
       script:
