@@ -36,7 +36,7 @@ jobs:
     - name: "integration tests"
       env:
         - DOCKER_COMPOSE_VERSION=1.23.2
-        #- DOCKER_HOST_IP =
+        - DOCKER_HOST_IP = 172.17.0.1
       before_install:
         #GRADLE 5.0
         - wget https://services.gradle.org/distributions/gradle-5.0-bin.zip -P /tmp
