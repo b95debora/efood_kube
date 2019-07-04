@@ -8,13 +8,13 @@ jdk:
   #depth: 2000
 
 stages:
-  - compile
+  - build
   - tests
   - build image
 
 jobs:
   include:
-    - stage: "build"
+    - stage: "Build"
       name: "compile & assemble"
       before_install:
         - wget https://services.gradle.org/distributions/gradle-5.0-bin.zip -P /tmp
