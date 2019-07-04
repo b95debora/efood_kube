@@ -14,8 +14,8 @@ stages:
 
 jobs:
   include:
-    - stage: "compile"
-      name: "build"
+    - stage: "build"
+      name: "compile & assemble"
       before_install:
         - wget https://services.gradle.org/distributions/gradle-5.0-bin.zip -P /tmp
         - sudo unzip -d /opt/gradle /tmp/gradle-*.zip
