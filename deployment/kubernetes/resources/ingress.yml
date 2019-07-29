@@ -1,0 +1,30 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: efood-restaurant-service
+spec:
+  rules:
+    - host: efood.app.it
+      http:
+        paths:
+          - path: /restaurants/
+            backend:
+              serviceName: efood-restaurant-service
+              servicePort: 80
+          - path: /swagger-ui.html
+            backend:
+              serviceName: efood-order-service
+              servicePort: 80
+          - path: /v2/api-docs
+            #vorrei es. /restaurants/v2/api-docs
+            backend:
+              serviceName: efood-order-service
+              servicePort: 80
+          - path: /swagger-resources
+            backend:
+              serviceName: efood-order-service
+              servicePort: 80
+          - path: /webjars/springfox-swagger-ui
+            backend:
+              serviceName: efood-order-service
+              servicePort: 80

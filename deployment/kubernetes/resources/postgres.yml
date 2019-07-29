@@ -1,0 +1,75 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: efood-database
+spec:
+  ports:
+    - port: 5432
+      targetPort: 5432
+  selector:
+    role: db
+
+---
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-config
+  labels:
+    app: postgres
+data:
+  POSTGRES_DB: database
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+
+---
+#definizione dei database da creare nel file initdb.sql
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: postgres-databases-creation
+data:
+  initdb.sql: |
+    CREATE DATABASE consumers;
+    CREATE DATABASE restaurants;
+    CREATE DATABASE orders;
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: efood-database
+spec:
+  replicas: 1
+  template:
+    metadata:
+      name: efood-database
+      labels:
+        role: db
+    spec:
+      #creao i volumi nel POD, il volume viene creato su disco del worker node
+      volumes:
+        - name: data
+          emptyDir: {}
+        - name: databases-creation
+          configMap:
+            name: postgres-databases-creation
+      containers:
+        - name: postgresql
+          image: postgres:latest
+          imagePullPolicy: IfNotPresent
+          readinessProbe:
+            tcpSocket:
+              port: 5432
+            initialDelaySeconds: 5
+            periodSeconds: 10
+          ports:
+            - containerPort: 5432
+          envFrom:
+            - configMapRef:
+                name: postgres-config
+          #monto i volumi nel container
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/postgresql/
+            - name: databases-creation
+              mountPath: /docker-entrypoint-initdb.d

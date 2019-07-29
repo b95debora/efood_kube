@@ -1,0 +1,56 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: efood-restaurant-service
+spec:
+  ports:
+    - port: 80
+      targetPort: 8080
+  selector:
+    svc: efood-restaurant-service
+
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: app-restaurant
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: restaurant-app
+      labels:
+        app: efood-restaurant
+        svc: efood-restaurant-service
+    spec:
+      containers:
+        - image: restaurant-service
+          name: restaurant-service
+          imagePullPolicy: IfNotPresent
+          readinessProbe:
+            httpGet:
+              path: /restaurants/
+              port: 8080
+          livenessProbe:
+            httpGet:
+              path: /restaurants/
+              port: 8080
+            initialDelaySeconds: 60
+            periodSeconds: 5
+          ports:
+            - containerPort: 8080
+          env:
+            - name: SPRING_DATASOURCE_URL
+              value: jdbc:postgresql://efood-database/restaurants
+            - name: SPRING_DATASOURCE_USERNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: POSTGRES_USER
+            - name: SPRING_DATASOURCE_PASSWORD
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-config
+                  key: POSTGRES_PASSWORD
+            - name: SPRING_DATASOURCE_DRIVER_CLASS_NAME
+              value: org.postgresql.Driver
